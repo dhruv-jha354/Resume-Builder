@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { FaDownload, FaSave, FaCheckCircle, FaPalette } from "react-icons/fa";
+import { FiSun, FiMoon } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
 import { getResumeById, updateResume } from "../../services/firebaseService";
 
@@ -36,8 +37,32 @@ const ResumeBuilder = () => {
     const [saveSuccess, setSaveSuccess] = useState(false);
     const [currentStep, setCurrentStep] = useState(0); // 0 to 6
     const [showTemplateSelector, setShowTemplateSelector] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
     
     const saveTimeoutRef = useRef(null);
+
+    useEffect(() => {
+        if (document.documentElement.classList.contains('dark') || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            setIsDarkMode(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setIsDarkMode(false);
+            document.documentElement.classList.remove('dark');
+        }
+    }, []);
+
+    const toggleDarkMode = () => {
+        if (isDarkMode) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            setIsDarkMode(false);
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            setIsDarkMode(true);
+        }
+    };
 
     // Main Form Data State
     const [formData, setFormData] = useState({
@@ -176,24 +201,32 @@ const ResumeBuilder = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 pb-12 print:bg-white print:p-0">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-950 dark:text-white pb-12 print:bg-white print:p-0 transition-colors duration-300">
             {/* Top Navbar */}
-            <div className="bg-white border-b border-gray-200 sticky top-0 z-50 print:hidden shadow-sm">
+            <div className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 sticky top-0 z-50 print:hidden shadow-sm transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center flex-wrap gap-4">
-                    <Link to="/dashboard" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-medium transition-colors">
+                    <Link to="/dashboard" className="flex items-center gap-2 text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
                         <IoArrowBack size={18} /> Dashboard
                     </Link>
 
-                    <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                        <button 
+                            onClick={toggleDarkMode} 
+                            className="p-2 text-gray-500 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                            aria-label="Toggle Dark Mode"
+                        >
+                            {isDarkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+                        </button>
+
                         <button 
                             onClick={() => setShowTemplateSelector(true)}
-                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded text-sm font-semibold hover:bg-gray-200 transition-colors flex items-center gap-2 border border-gray-200"
+                            className="px-4 py-2 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-200 rounded text-sm font-semibold hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-2 border border-gray-200 dark:border-slate-700"
                         >
-                            <FaPalette className="text-purple-500" />
+                            <FaPalette className="text-purple-500 dark:text-purple-400" />
                             Change Template
                         </button>
 
-                        <span className="text-sm font-semibold flex items-center gap-2 text-gray-600">
+                        <span className="text-sm font-semibold flex items-center gap-2 text-gray-600 dark:text-slate-300">
                             {saving ? (
                                 <span className="flex items-center gap-2 italic"><span className="animate-spin h-3 w-3 border-2 border-gray-500 rounded-full border-t-transparent"></span> Saving...</span>
                             ) : saveSuccess ? (
@@ -221,20 +254,20 @@ const ResumeBuilder = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 print:block">
                     
                     {/* LEFT - Form Editor */}
-                    <div className="lg:col-span-5 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden flex flex-col h-[800px] print:hidden">
+                    <div className="lg:col-span-5 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 overflow-hidden flex flex-col h-[800px] print:hidden transition-colors">
                         
                         {/* Stepper Header */}
-                        <div className="bg-gradient-to-r from-gray-50 to-white p-4 border-b border-gray-200 flex items-center justify-between">
-                            <h3 className="font-bold text-gray-800 text-lg">
+                        <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-800 dark:to-slate-800 p-4 border-b border-gray-200 dark:border-slate-700 flex items-center justify-between transition-colors">
+                            <h3 className="font-bold text-gray-800 dark:text-slate-100 text-lg">
                                 Form Builder
                             </h3>
-                            <div className="text-sm font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                            <div className="text-sm font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800/50">
                                 Step {currentStep + 1} of {STEPS.length}
                             </div>
                         </div>
 
                         {/* Progress Bar */}
-                        <div className="w-full bg-gray-200 h-1.5">
+                        <div className="w-full bg-gray-200 dark:bg-slate-700 h-1.5">
                             <div 
                                 className="bg-blue-600 h-1.5 transition-all duration-300"
                                 style={{ width: `${((currentStep) / (STEPS.length - 1)) * 100}%` }}
@@ -294,12 +327,12 @@ const ResumeBuilder = () => {
                         </div>
 
                         {/* Footer Controls */}
-                        <div className="bg-white border-t border-gray-100 p-4 flex justify-between items-center z-10">
+                        <div className="bg-white dark:bg-slate-800 border-t border-gray-100 dark:border-slate-700 p-4 flex justify-between items-center z-10 transition-colors">
                             <button 
                                 onClick={handlePrev} 
                                 disabled={currentStep === 0}
                                 className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors ${
-                                    currentStep === 0 ? "text-gray-400 bg-gray-100 cursor-not-allowed" : "text-gray-700 bg-gray-100 hover:bg-gray-200"
+                                    currentStep === 0 ? "text-gray-400 bg-gray-100 dark:bg-slate-700 dark:text-slate-500 cursor-not-allowed" : "text-gray-700 bg-gray-100 hover:bg-gray-200 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
                                 }`}
                             >
                                 <IoArrowBack /> Back
