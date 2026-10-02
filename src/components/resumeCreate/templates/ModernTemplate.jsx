@@ -1,62 +1,116 @@
 import React from "react";
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGlobe } from "react-icons/fa";
 
+/**
+ * Modern Professional Template
+ * Layout: Corporate Two-Column (Navy #0F172A Sidebar + Clean Slate #F8FAFC Body)
+ * Color Palette: Navy (#0F172A), Indigo (#4F46E5), Slate (#64748B), Light Background (#F8FAFC)
+ * Proportions: A4 Standard
+ */
 const ModernTemplate = ({ resumeData }) => {
-    const { personalInfo = {}, summary, experience = [], education = [], skills = [], projects = [] } = resumeData;
+    const { personalInfo = {}, summary, experience = [], education = [], skills = [], projects = [] } = resumeData || {};
 
     return (
-        <div className="flex h-full bg-white font-sans">
-            {/* Sidebar (Left Column) */}
-            <div className="w-1/3 bg-gray-900 text-gray-100 p-4 sm:p-8 h-full">
-                {personalInfo.profileImage ? (
-                    <img 
-                        src={personalInfo.profileImage} 
-                        alt="Profile" 
-                        className="w-16 h-16 sm:w-32 sm:h-32 rounded-full object-cover border-2 sm:border-4 border-green-500 mb-4 sm:mb-6 mx-auto" 
-                    />
-                ) : (
-                    <div className="w-16 h-16 sm:w-32 sm:h-32 rounded-full border-2 sm:border-4 border-green-500 mb-4 sm:mb-6 mx-auto bg-gray-800 flex items-center justify-center">
-                        <span className="text-2xl sm:text-4xl text-gray-400">{personalInfo.fullName?.charAt(0) || "Y"}</span>
+        <div className="flex h-full min-h-full bg-[#F8FAFC] font-sans text-[#0F172A]" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
+            
+            {/* ── Left Sidebar (Navy: #0F172A) ── */}
+            <div className="w-[34%] bg-[#0F172A] text-slate-100 p-6 sm:p-7 flex flex-col justify-between">
+                <div>
+                    {/* Avatar / Monogram */}
+                    <div className="flex flex-col items-center mb-6">
+                        {personalInfo.profileImage ? (
+                            <img 
+                                src={personalInfo.profileImage} 
+                                alt="Profile" 
+                                className="w-24 h-24 rounded-full object-cover border-2 border-[#4F46E5] shadow-md mb-3" 
+                            />
+                        ) : (
+                            <div className="w-20 h-20 rounded-full border-2 border-[#4F46E5] mb-3 bg-slate-800 flex items-center justify-center shadow-md">
+                                <span className="text-2xl font-bold tracking-tight text-slate-200">
+                                    {personalInfo.fullName ? personalInfo.fullName.charAt(0) : "U"}
+                                </span>
+                            </div>
+                        )}
+                        
+                        <h1 className="text-lg sm:text-xl font-bold text-white text-center leading-tight tracking-tight break-words">
+                            {personalInfo.fullName || "Your Full Name"}
+                        </h1>
+                        <p className="text-[#818CF8] font-medium text-center text-xs tracking-wider uppercase mt-1 break-words">
+                            {personalInfo.profession || "Professional Title"}
+                        </p>
                     </div>
-                )}
-                
-                <h1 className="text-lg sm:text-2xl font-bold text-white text-center leading-tight mb-1 sm:mb-2 break-words">
-                    {personalInfo.fullName || "Your Name"}
-                </h1>
-                <p className="text-green-400 font-medium text-center text-[10px] sm:text-sm mb-4 sm:mb-8 break-words">
-                    {personalInfo.profession || "Profession Title"}
-                </p>
 
-                <div className="space-y-2 sm:space-y-4 text-[9px] sm:text-xs">
-                    {personalInfo.email && <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><FaEnvelope className="text-green-400 flex-shrink-0 hidden sm:block" /><span className="break-all">{personalInfo.email}</span></div>}
-                    {personalInfo.phone && <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><FaPhone className="text-green-400 flex-shrink-0 hidden sm:block" /><span className="break-all">{personalInfo.phone}</span></div>}
-                    {personalInfo.location && <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><FaMapMarkerAlt className="text-green-400 flex-shrink-0 hidden sm:block" /><span className="break-all">{personalInfo.location}</span></div>}
-                    {personalInfo.linkedin && <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><FaLinkedin className="text-green-400 flex-shrink-0 hidden sm:block" /><span className="break-all">{personalInfo.linkedin}</span></div>}
-                    {personalInfo.website && <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><FaGlobe className="text-green-400 flex-shrink-0 hidden sm:block" /><span className="break-all">{personalInfo.website}</span></div>}
+                    {/* Contact Section */}
+                    <div className="space-y-2.5 text-xs text-slate-300 mb-6 border-t border-slate-800 pt-4">
+                        <h2 className="text-[11px] font-bold text-[#64748B] uppercase tracking-widest mb-2">
+                            Contact
+                        </h2>
+                        {personalInfo.email && (
+                            <div className="flex items-center gap-2.5">
+                                <FaEnvelope className="text-[#818CF8] flex-shrink-0" size={12} />
+                                <span className="break-all text-[11px]">{personalInfo.email}</span>
+                            </div>
+                        )}
+                        {personalInfo.phone && (
+                            <div className="flex items-center gap-2.5">
+                                <FaPhone className="text-[#818CF8] flex-shrink-0" size={12} />
+                                <span className="text-[11px]">{personalInfo.phone}</span>
+                            </div>
+                        )}
+                        {personalInfo.location && (
+                            <div className="flex items-center gap-2.5">
+                                <FaMapMarkerAlt className="text-[#818CF8] flex-shrink-0" size={12} />
+                                <span className="text-[11px]">{personalInfo.location}</span>
+                            </div>
+                        )}
+                        {personalInfo.linkedin && (
+                            <div className="flex items-center gap-2.5">
+                                <FaLinkedin className="text-[#818CF8] flex-shrink-0" size={12} />
+                                <span className="break-all text-[11px]">{personalInfo.linkedin}</span>
+                            </div>
+                        )}
+                        {personalInfo.website && (
+                            <div className="flex items-center gap-2.5">
+                                <FaGlobe className="text-[#818CF8] flex-shrink-0" size={12} />
+                                <span className="break-all text-[11px]">{personalInfo.website}</span>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Core Skills Chips */}
+                    {skills.length > 0 && (
+                        <div className="mb-6 border-t border-slate-800 pt-4">
+                            <h2 className="text-[11px] font-bold text-[#64748B] uppercase tracking-widest mb-2.5">
+                                Core Competencies
+                            </h2>
+                            <div className="flex flex-wrap gap-1.5">
+                                {skills.map((skill, index) => (
+                                    <span 
+                                        key={index} 
+                                        className="px-2.5 py-1 bg-slate-800/90 text-slate-200 border border-slate-700/80 rounded text-[11px] font-medium"
+                                    >
+                                        {skill}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
-                {skills.length > 0 && (
-                    <div className="mt-6 sm:mt-10">
-                        <h2 className="text-[10px] sm:text-sm font-bold text-white uppercase tracking-widest mb-2 sm:mb-4 border-b border-gray-700 pb-1 sm:pb-2">Skills</h2>
-                        <div className="flex flex-wrap gap-1 sm:gap-2">
-                            {skills.map((skill, index) => (
-                                <span key={index} className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-green-500/20 text-green-300 rounded text-[9px] sm:text-xs">
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                )}
-                
+                {/* Education in Sidebar */}
                 {education.length > 0 && (
-                    <div className="mt-6 sm:mt-10">
-                        <h2 className="text-[10px] sm:text-sm font-bold text-white uppercase tracking-widest mb-2 sm:mb-4 border-b border-gray-700 pb-1 sm:pb-2">Education</h2>
-                        <div className="space-y-2 sm:space-y-4 text-[9px] sm:text-xs">
+                    <div className="border-t border-slate-800 pt-4">
+                        <h2 className="text-[11px] font-bold text-[#64748B] uppercase tracking-widest mb-2.5">
+                            Education
+                        </h2>
+                        <div className="space-y-3">
                             {education.map((edu, index) => (
-                                <div key={index}>
-                                    <h3 className="font-bold text-gray-200">{edu.degree}</h3>
-                                    <p className="text-green-400 mt-0.5 sm:mt-1">{edu.school}</p>
-                                    <span className="text-gray-500 block text-[8px] sm:text-xs">{edu.startDate} - {edu.endDate}</span>
+                                <div key={index} className="text-xs">
+                                    <p className="font-bold text-white leading-tight">
+                                        {edu.degree}{edu.fieldOfStudy ? ` — ${edu.fieldOfStudy}` : ""}
+                                    </p>
+                                    <p className="text-slate-400 text-[11px]">{edu.school || edu.institution}</p>
+                                    <p className="text-[#64748B] text-[10px]">{edu.startDate} – {edu.endDate}</p>
                                 </div>
                             ))}
                         </div>
@@ -64,54 +118,70 @@ const ModernTemplate = ({ resumeData }) => {
                 )}
             </div>
 
-            {/* Main Content (Right Column) */}
-            <div className="w-2/3 p-4 sm:p-10 bg-white h-full overflow-y-auto hidden-scrollbar">
+            {/* ── Right Content Area (Light Background: #F8FAFC) ── */}
+            <div className="flex-1 p-6 sm:p-8 bg-white flex flex-col justify-start space-y-6">
                 
+                {/* Executive Profile Summary */}
                 {summary && (
-                    <div className="mb-6 sm:mb-10">
-                        <h2 className="text-base sm:text-xl font-bold text-gray-900 uppercase tracking-widest mb-2 sm:mb-4 flex items-center gap-2 sm:gap-3">
-                            <span className="w-4 sm:w-8 h-1 bg-green-500 block"></span> Summary
+                    <div>
+                        <h2 className="text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-2 border-b-2 border-[#0F172A] pb-1 inline-block">
+                            Executive Profile
                         </h2>
-                        <p className="text-[10px] sm:text-sm text-gray-600 leading-relaxed">{summary}</p>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
+                            {summary}
+                        </p>
                     </div>
                 )}
 
+                {/* Experience Timeline */}
                 {experience.length > 0 && (
-                    <div className="mb-6 sm:mb-10">
-                        <h2 className="text-base sm:text-xl font-bold text-gray-900 uppercase tracking-widest mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3">
-                            <span className="w-4 sm:w-8 h-1 bg-green-500 block"></span> Experience
+                    <div>
+                        <h2 className="text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-4 border-b-2 border-[#0F172A] pb-1 inline-block">
+                            Professional Experience
                         </h2>
-                        <div className="space-y-4 sm:space-y-6">
+                        <div className="space-y-5 relative">
                             {experience.map((exp, index) => (
-                                <div key={index} className="relative pl-4 sm:pl-6 border-l-2 border-gray-200 before:absolute before:w-2 sm:before:w-3 before:h-2 sm:before:h-3 before:bg-green-500 before:rounded-full before:-left-[5px] sm:before:-left-[7px] before:top-1 text-[10px] sm:text-sm">
-                                    <h3 className="font-bold text-gray-900">{exp.role}</h3>
-                                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-1 sm:mb-2">
-                                        <span className="font-semibold text-green-600">{exp.company}</span>
-                                        <span className="text-[8px] sm:text-xs font-semibold text-gray-400 bg-gray-100 px-1 sm:px-2 py-0.5 sm:py-1 rounded mt-1 sm:mt-0 w-fit">{exp.startDate} - {exp.endDate}</span>
+                                <div key={index} className="relative pl-4 border-l-2 border-slate-200">
+                                    {/* Timeline Node */}
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#4F46E5] ring-4 ring-white" />
+                                    
+                                    <div className="flex justify-between items-baseline mb-0.5">
+                                        <h3 className="font-bold text-[#0F172A] text-sm">{exp.role}</h3>
+                                        <span className="text-xs font-medium text-[#64748B] bg-slate-100 px-2 py-0.5 rounded-full">{exp.startDate} – {exp.endDate}</span>
                                     </div>
-                                    <p className="text-gray-600 leading-relaxed whitespace-pre-line mt-1 sm:mt-2 text-[9px] sm:text-sm">
-                                        {exp.description}
-                                    </p>
+                                    <p className="text-xs font-semibold text-[#4F46E5] mb-1.5">{exp.company}</p>
+                                    <ul className="text-xs text-slate-600 space-y-1 list-disc pl-4 leading-relaxed">
+                                        {(exp.description || "").split("\n").filter(l => l.trim()).map((line, i) => (
+                                            <li key={i}>{line}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             ))}
                         </div>
                     </div>
                 )}
 
+                {/* Strategic Projects */}
                 {projects.length > 0 && (
-                    <div className="mb-6 sm:mb-10">
-                        <h2 className="text-base sm:text-xl font-bold text-gray-900 uppercase tracking-widest mb-3 sm:mb-6 flex items-center gap-2 sm:gap-3">
-                            <span className="w-4 sm:w-8 h-1 bg-green-500 block"></span> Projects
+                    <div>
+                        <h2 className="text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-3 border-b-2 border-[#0F172A] pb-1 inline-block">
+                            Key Projects & Initiatives
                         </h2>
-                        <div className="space-y-4 sm:space-y-6">
+                        <div className="space-y-3">
                             {projects.map((proj, index) => (
-                                <div key={index} className="text-[10px] sm:text-sm">
-                                    <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-1">
-                                        <h3 className="font-bold text-gray-900 text-sm sm:text-lg">{proj.name}</h3>
-                                        {proj.link && <a href={'http://' + proj.link.replace(/^https?:\/\//, '')} className="text-[8px] sm:text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-1.5 py-0.5 rounded-full transition-colors break-all">Link</a>}
+                                <div key={index} className="p-3 bg-[#F8FAFC] rounded-xl border border-slate-200/80">
+                                    <div className="flex justify-between items-baseline mb-1">
+                                        <h3 className="font-bold text-[#0F172A] text-xs sm:text-sm">
+                                            {proj.name}
+                                            {proj.link && <span className="font-normal text-xs text-[#4F46E5] ml-2">({proj.link})</span>}
+                                        </h3>
+                                        {proj.techStack && (
+                                            <span className="text-[11px] font-semibold text-[#64748B] bg-white border border-slate-200 px-2 py-0.5 rounded">
+                                                {proj.techStack}
+                                            </span>
+                                        )}
                                     </div>
-                                    <p className="text-[9px] sm:text-xs text-green-600 font-semibold mb-1 sm:mb-2">{proj.techStack}</p>
-                                    <p className="text-gray-600 leading-relaxed whitespace-pre-line text-[9px] sm:text-sm">
+                                    <p className="text-xs text-slate-600 leading-relaxed">
                                         {proj.description}
                                     </p>
                                 </div>
@@ -119,12 +189,7 @@ const ModernTemplate = ({ resumeData }) => {
                         </div>
                     </div>
                 )}
-                
             </div>
-            <style jsx>{`
-                .hidden-scrollbar::-webkit-scrollbar { display: none; }
-                .hidden-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-            `}</style>
         </div>
     );
 };

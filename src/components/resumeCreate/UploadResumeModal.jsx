@@ -85,29 +85,29 @@ const UploadResumeModal = ({ onClose, user }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 pb-20">
+        <div className="fixed inset-0 flex items-center justify-center z-[100] px-4">
             {/* Background blur overlay */}
             <div
-                className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity opacity-100"
+                className="absolute inset-0 bg-slate-950/60 backdrop-blur-md transition-opacity"
                 onClick={!uploading ? onClose : undefined}
             ></div>
 
             {/* Modal Box */}
-            <div className="relative bg-white w-full max-w-lg p-8 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform transition-all opacity-100 scale-100">
+            <div className="relative bg-white dark:bg-slate-900 w-full max-w-lg p-6 sm:p-8 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 transition-colors">
                 <button 
                     onClick={onClose} 
                     disabled={uploading}
-                    className="absolute top-6 right-6 text-gray-400 hover:text-gray-800 hover:bg-gray-100 p-2 rounded-full transition-all"
+                    className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 p-2 rounded-full transition-all"
                 >
                     <FaTimes size={18} />
                 </button>
                 
-                <div className="text-center mb-8 mt-2">
-                    <h2 className="font-bold text-3xl text-gray-900 tracking-tight" style={{ fontFamily: "Outfit, sans-serif" }}>
+                <div className="text-center mb-6 mt-2">
+                    <h2 className="font-extrabold text-2xl text-slate-900 dark:text-white tracking-tight">
                         Upload Resume
                     </h2>
-                    <p className="text-gray-500 mt-2 text-sm max-w-sm mx-auto">
-                        Upload your existing resume and we'll extract your information to kickstart the editing process.
+                    <p className="text-slate-500 dark:text-slate-400 mt-1 text-xs max-w-sm mx-auto">
+                        Upload your existing resume file (PDF/DOCX) to start editing.
                     </p>
                 </div>
 
@@ -116,18 +116,18 @@ const UploadResumeModal = ({ onClose, user }) => {
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
-                        className={`w-full h-64 border-2 border-dashed rounded-3xl flex flex-col items-center justify-center transition-all bg-gray-50/50 cursor-pointer ${
-                            isDragging ? 'border-blue-500 bg-blue-50/50 shadow-inner' : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50/20'
+                        className={`w-full h-56 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center transition-all bg-slate-50/50 dark:bg-slate-800/40 cursor-pointer ${
+                            isDragging ? 'border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30' : 'border-slate-300 dark:border-slate-700 hover:border-indigo-400 hover:bg-indigo-50/20'
                         }`}
                         onClick={() => fileInputRef.current?.click()}
                     >
-                        <div className={`p-5 rounded-full mb-4 transition-colors ${isDragging ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-400 shadow-sm'}`}>
-                            <FaCloudUploadAlt className="text-4xl" />
+                        <div className={`p-4 rounded-full mb-3 transition-colors ${isDragging ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-600' : 'bg-white dark:bg-slate-800 text-slate-400 shadow-sm'}`}>
+                            <FaCloudUploadAlt className="text-3xl text-indigo-500" />
                         </div>
-                        <p className="font-semibold text-gray-700 mb-1">
-                            Click to browse <span className="font-normal text-gray-500">or drag & drop</span>
+                        <p className="font-semibold text-xs text-slate-700 dark:text-slate-200 mb-1">
+                            Click to browse <span className="font-normal text-slate-500">or drag & drop</span>
                         </p>
-                        <p className="text-xs text-gray-400 mt-1 font-medium tracking-wide uppercase">PDF or DOCX (Max 5MB)</p>
+                        <p className="text-[10px] text-slate-400 font-medium uppercase">PDF or DOCX (Max 5MB)</p>
                         <input 
                             type="file" 
                             ref={fileInputRef} 
@@ -137,72 +137,49 @@ const UploadResumeModal = ({ onClose, user }) => {
                         />
                     </div>
                 ) : (
-                    <div className="w-full border border-gray-100 rounded-3xl p-6 bg-gray-50 shadow-sm relative overflow-hidden">
-                        <div className="flex items-center gap-5 mb-2 relative z-10">
-                            <div className="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-gray-100">
+                    <div className="w-full border border-slate-200 dark:border-slate-700 rounded-2xl p-5 bg-slate-50 dark:bg-slate-800/60 shadow-sm relative overflow-hidden">
+                        <div className="flex items-center gap-4 mb-2 relative z-10">
+                            <div className="w-14 h-14 rounded-xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center shrink-0 border border-slate-200 dark:border-slate-700">
                                 {getFileIcon()}
                             </div>
                             <div className="flex-1 min-w-0 py-1">
-                                <p className="font-semibold text-gray-800 truncate text-lg pr-4">{file.name}</p>
-                                <p className="text-sm text-gray-500 mt-1">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                <p className="font-bold text-slate-800 dark:text-slate-200 truncate text-sm">{file.name}</p>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                             </div>
                             {!uploading && (
                                 <button 
                                     onClick={() => setFile(null)}
-                                    className="text-gray-400 hover:text-red-500 p-2 rounded-full hover:bg-red-50 transition-colors"
+                                    className="text-slate-400 hover:text-red-500 p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                                 >
-                                    <FaTimes size={16} />
+                                    <FaTimes size={14} />
                                 </button>
                             )}
                         </div>
                         
-                        <div className={`transition-all duration-500 ease-in-out ${uploading ? 'h-16 opacity-100 mt-6' : 'h-0 opacity-0 mt-0 overflow-hidden'}`}>
-                            <div className="flex justify-between text-xs font-bold text-gray-600 mb-2 uppercase tracking-wider">
+                        <div className={`transition-all duration-500 ease-in-out ${uploading ? 'h-14 opacity-100 mt-4' : 'h-0 opacity-0 mt-0 overflow-hidden'}`}>
+                            <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-300 mb-1 uppercase tracking-wider">
                                 <span>Extracting Data</span>
-                                <span className={progress === 100 ? 'text-green-500' : 'text-blue-600'}>{progress}%</span>
+                                <span className={progress === 100 ? 'text-emerald-500' : 'text-indigo-600'}>{progress}%</span>
                             </div>
-                            <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+                            <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                                 <div 
-                                    className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 transition-all duration-300 relative"
+                                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-300 relative"
                                     style={{ width: `${progress}%` }}
-                                >
-                                    <div className="absolute inset-0 bg-white/20 w-full h-full animate-[shimmer_1.5s_infinite]"></div>
-                                </div>
+                                ></div>
                             </div>
                         </div>
                         
                         {!uploading && (
                             <button
                                 onClick={handleUpload}
-                                className="w-full mt-6 py-4 rounded-2xl font-bold bg-gray-900 text-white hover:bg-black shadow-[0_8px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.15)] transform hover:-translate-y-0.5 transition-all outline-none"
+                                className="w-full mt-4 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-md shadow-indigo-500/20 transform hover:-translate-y-0.5 transition-all outline-none"
                             >
                                 Process & Edit Resume
                             </button>
                         )}
-
-                        {/* Subtle decorative background blob during upload */}
-                        {uploading && (
-                            <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-400/10 rounded-full blur-2xl"></div>
-                        )}
-                    </div>
-                )}
-
-                {!file && (
-                    <div className="mt-6 flex items-center justify-center gap-2 text-xs text-gray-400">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        Your files are securely processed and never shared.
                     </div>
                 )}
             </div>
-            
-            <style jsx>{`
-                @keyframes shimmer {
-                    0% { transform: translateX(-100%); }
-                    100% { transform: translateX(100%); }
-                }
-            `}</style>
         </div>
     );
 };

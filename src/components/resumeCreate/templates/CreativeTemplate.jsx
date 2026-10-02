@@ -1,78 +1,157 @@
 import React from "react";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaGlobe, FaArrowUp, FaExternalLinkAlt, FaLayerGroup, FaBriefcase, FaGraduationCap } from "react-icons/fa";
 
+/**
+ * Creative Portfolio Template
+ * Behance / Dribbble inspired design for UI/UX & Product Designers.
+ * Palette: Purple (#7C3AED), Cyan (#06B6D4), Deep Slate (#0F172A), Soft White/Zinc.
+ * Features: Gradient name banner, beautiful case study project cards, modern skill chips, and elegant timeline.
+ * Proportions: A4 Standard
+ */
 const CreativeTemplate = ({ resumeData }) => {
-    const { personalInfo = {}, summary, experience = [], education = [], skills = [], projects = [] } = resumeData;
+    const { personalInfo = {}, summary, experience = [], education = [], skills = [], projects = [] } = resumeData || {};
 
     return (
-        <div className="p-8 bg-white h-full font-sans text-gray-800">
-            {/* Header Block */}
-            <div className="bg-green-50 border-l-8 border-green-500 p-8 mb-8 relative overflow-hidden">
-                <div className="absolute -right-10 -bottom-10 opacity-10">
-                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="100" cy="100" r="100" fill="#22c55e" />
-                    </svg>
-                </div>
+        <div className="bg-white h-full min-h-full font-sans text-slate-900 flex flex-col" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
+            
+            {/* ── Large Designer Header Banner ── */}
+            <div className="p-7 sm:p-8 bg-gradient-to-b from-purple-50/60 via-cyan-50/30 to-white border-b border-slate-100 relative overflow-hidden">
+                {/* Decorative subtle ambient gradient orbs */}
+                <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-purple-400/10 to-cyan-400/10 rounded-full blur-3xl pointer-events-none" />
                 
-                <div className="relative z-10">
-                    <h1 className="text-5xl font-extrabold text-gray-900 mb-2 uppercase tracking-tighter">
-                        {personalInfo.fullName || "YOUR NAME"}
-                    </h1>
-                    <h2 className="text-xl text-green-600 font-bold tracking-widest uppercase">
-                        {personalInfo.profession || "Creative Professional"}
-                    </h2>
+                <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div className="flex items-center gap-5">
+                        {/* Profile Image with Gradient Ring */}
+                        <div className="p-[2px] rounded-3xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 shadow-lg flex-shrink-0">
+                            {personalInfo.profileImage ? (
+                                <img 
+                                    src={personalInfo.profileImage} 
+                                    alt="Profile" 
+                                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover bg-white" 
+                                />
+                            ) : (
+                                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-slate-900 flex items-center justify-center font-black text-3xl text-white">
+                                    {personalInfo.fullName ? personalInfo.fullName.charAt(0) : "C"}
+                                </div>
+                            )}
+                        </div>
 
-                    <div className="flex flex-wrap gap-4 mt-6 text-sm font-medium">
-                        {personalInfo.email && <span className="bg-white/60 px-3 py-1 rounded shadow-sm">{personalInfo.email}</span>}
-                        {personalInfo.phone && <span className="bg-white/60 px-3 py-1 rounded shadow-sm">{personalInfo.phone}</span>}
-                        {personalInfo.location && <span className="bg-white/60 px-3 py-1 rounded shadow-sm">{personalInfo.location}</span>}
+                        {/* Name & Title */}
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-purple-100/80 text-purple-800 border border-purple-200/60 rounded-full text-[10px] font-bold uppercase tracking-widest mb-1.5 shadow-2xs">
+                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                                {personalInfo.profession || "Senior UI/UX & Product Designer"}
+                            </div>
+                            
+                            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-none uppercase">
+                                <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 bg-clip-text text-transparent">
+                                    {personalInfo.fullName || "YOUR NAME"}
+                                </span>
+                            </h1>
+
+                            <p className="text-xs text-slate-600 max-w-lg mt-2 leading-relaxed font-normal">
+                                {summary || "Digital product designer focusing on design systems, human-centered interaction design, and scalable UI architectures."}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Contact Badges */}
+                    <div className="flex flex-wrap sm:flex-col items-start gap-2 text-xs text-slate-600 bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+                        {personalInfo.email && (
+                            <div className="flex items-center gap-2">
+                                <FaEnvelope className="text-purple-600 flex-shrink-0" size={11} />
+                                <span className="text-[11px] font-medium text-slate-700">{personalInfo.email}</span>
+                            </div>
+                        )}
+                        {personalInfo.phone && (
+                            <div className="flex items-center gap-2">
+                                <FaPhone className="text-cyan-600 flex-shrink-0" size={11} />
+                                <span className="text-[11px] font-medium text-slate-700">{personalInfo.phone}</span>
+                            </div>
+                        )}
+                        {personalInfo.location && (
+                            <div className="flex items-center gap-2">
+                                <FaMapMarkerAlt className="text-purple-600 flex-shrink-0" size={11} />
+                                <span className="text-[11px] font-medium text-slate-700">{personalInfo.location}</span>
+                            </div>
+                        )}
+                        {personalInfo.website && (
+                            <div className="flex items-center gap-2">
+                                <FaGlobe className="text-cyan-600 flex-shrink-0" size={11} />
+                                <span className="text-[11px] text-purple-700 font-semibold">{personalInfo.website}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-                {/* Main Content Column */}
-                <div className="md:col-span-8">
-                    {/* Summary */}
-                    {summary && (
-                        <div className="mb-8">
-                            <h3 className="text-2xl font-black text-gray-900 mb-4 inline-block border-b-4 border-green-400">About Me</h3>
-                            <p className="text-sm leading-relaxed text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100">{summary}</p>
-                        </div>
-                    )}
-
-                    {/* Experience */}
-                    {experience.length > 0 && (
-                        <div className="mb-8">
-                            <h3 className="text-2xl font-black text-gray-900 mb-6 inline-block border-b-4 border-green-400">Experience</h3>
-                            <div className="space-y-6">
-                                {experience.map((exp, index) => (
-                                    <div key={index} className="group">
-                                        <div className="flex items-center gap-4 mb-2">
-                                            <div className="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center font-bold text-lg group-hover:bg-green-500 group-hover:text-white transition-colors">
-                                                {exp.company.charAt(0)}
-                                            </div>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 text-lg leading-tight">{exp.role}</h4>
-                                                <div className="text-sm font-semibold text-gray-500">{exp.company} • {exp.startDate} - {exp.endDate}</div>
-                                            </div>
+            {/* ── Main Layout Body ── */}
+            <div className="p-7 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-7 flex-1">
+                
+                {/* Left 7 Columns: Projects & Experience */}
+                <div className="md:col-span-7 space-y-6">
+                    {/* Featured Projects / Case Studies */}
+                    {projects.length > 0 && (
+                        <div>
+                            <div className="flex items-center justify-between mb-3.5">
+                                <h2 className="text-xs font-black uppercase tracking-widest text-slate-900 flex items-center gap-2">
+                                    <span className="w-2.5 h-2.5 rounded-md bg-gradient-to-r from-purple-600 to-cyan-500" />
+                                    Featured Case Studies & Projects
+                                </h2>
+                                <span className="text-[10px] font-bold text-cyan-600 uppercase tracking-wider">Portfolio</span>
+                            </div>
+                            <div className="space-y-3.5">
+                                {projects.map((proj, index) => (
+                                    <div 
+                                        key={index} 
+                                        className="p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-purple-300 transition-all shadow-xs hover:shadow-md group relative overflow-hidden"
+                                    >
+                                        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                        
+                                        <div className="flex justify-between items-start mb-1.5">
+                                            <h3 className="font-bold text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+                                                {proj.name}
+                                                {proj.link && (
+                                                    <span className="text-[10px] text-purple-600 font-semibold inline-flex items-center gap-1">
+                                                        <FaExternalLinkAlt size={8} />
+                                                    </span>
+                                                )}
+                                            </h3>
+                                            {proj.techStack && (
+                                                <span className="text-[10px] font-bold px-2 py-0.5 bg-purple-50 text-purple-700 border border-purple-200/60 rounded-full">
+                                                    {proj.techStack}
+                                                </span>
+                                            )}
                                         </div>
-                                        <p className="text-sm text-gray-600 pl-16 pt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>
+                                        <p className="text-xs text-slate-600 leading-relaxed">
+                                            {proj.description}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     )}
 
-                    {/* Projects */}
-                    {projects.length > 0 && (
-                        <div className="mb-8">
-                            <h3 className="text-2xl font-black text-gray-900 mb-6 inline-block border-b-4 border-green-400">Portfolio</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                                {projects.map((proj, index) => (
-                                    <div key={index} className="bg-gray-50 p-4 rounded-xl border border-gray-100 hover:border-green-300 transition-colors">
-                                        <h4 className="font-bold text-gray-900 mb-1">{proj.name}</h4>
-                                        <div className="text-xs text-green-600 font-bold mb-2">{proj.techStack}</div>
-                                        <p className="text-xs text-gray-600 line-clamp-3">{proj.description}</p>
+                    {/* Experience Timeline */}
+                    {experience.length > 0 && (
+                        <div>
+                            <h2 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-3.5 flex items-center gap-2">
+                                <span className="w-2.5 h-2.5 rounded-md bg-gradient-to-r from-purple-600 to-cyan-500" />
+                                Experience & Career History
+                            </h2>
+                            <div className="space-y-4 relative">
+                                {experience.map((exp, index) => (
+                                    <div key={index} className="relative pl-5 border-l-2 border-gradient-to-b from-purple-500 to-cyan-400 border-purple-200">
+                                        <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-purple-600 ring-4 ring-purple-100" />
+                                        
+                                        <div className="flex justify-between items-baseline mb-0.5">
+                                            <h4 className="font-bold text-slate-900 text-xs sm:text-sm">{exp.role}</h4>
+                                            <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">{exp.startDate} – {exp.endDate}</span>
+                                        </div>
+                                        <p className="text-xs font-semibold text-purple-700 mb-1">{exp.company}</p>
+                                        <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                                            {exp.description}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -80,47 +159,43 @@ const CreativeTemplate = ({ resumeData }) => {
                     )}
                 </div>
 
-                {/* Side Content Column */}
-                <div className="md:col-span-4 space-y-8">
-                    {/* Extra Links */}
-                    {(personalInfo.linkedin || personalInfo.website) && (
-                        <div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 inline-block border-b-4 border-green-400">Links</h3>
-                            <ul className="space-y-2 text-sm font-medium">
-                                {personalInfo.website && <li><a className="text-green-600 hover:underline">Website</a></li>}
-                                {personalInfo.linkedin && <li><a className="text-green-600 hover:underline">LinkedIn</a></li>}
-                            </ul>
-                        </div>
-                    )}
-
-                    {/* Skills */}
+                {/* Right 5 Columns: Design Toolkit & Education */}
+                <div className="md:col-span-5 space-y-6">
+                    {/* Skills & Design Toolkit */}
                     {skills.length > 0 && (
-                        <div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 inline-block border-b-4 border-green-400">Expertise</h3>
-                            <div className="flex flex-col gap-2">
+                        <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/80">
+                            <h2 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-3 flex items-center gap-1.5">
+                                <FaLayerGroup className="text-purple-600" size={12} />
+                                Design & Tech Toolkit
+                            </h2>
+                            <div className="flex flex-wrap gap-1.5">
                                 {skills.map((skill, index) => (
-                                    <div key={index} className="flex items-center gap-2">
-                                        <div className="w-full bg-gray-100 rounded-full h-6 flex items-center px-3 relative overflow-hidden">
-                                            <span className="relative z-10 text-xs font-bold text-gray-800">{skill}</span>
-                                            {/* Fake skill bar width purely for aesthetic */}
-                                            <div className="absolute left-0 top-0 h-full bg-green-200 opacity-50" style={{ width: `${60 + (Math.random() * 40)}%` }}></div>
-                                        </div>
-                                    </div>
+                                    <span 
+                                        key={index} 
+                                        className="px-2.5 py-1 bg-white text-slate-800 border border-slate-200/90 rounded-xl text-xs font-semibold shadow-2xs hover:border-purple-400 hover:text-purple-700 transition-colors"
+                                    >
+                                        {skill}
+                                    </span>
                                 ))}
                             </div>
                         </div>
                     )}
 
-                    {/* Education */}
+                    {/* Education & Background */}
                     {education.length > 0 && (
-                        <div>
-                            <h3 className="text-xl font-black text-gray-900 mb-4 inline-block border-b-4 border-green-400">Education</h3>
-                            <div className="space-y-4">
+                        <div className="bg-slate-50/70 p-5 rounded-2xl border border-slate-200/80">
+                            <h2 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-3 flex items-center gap-1.5">
+                                <FaGraduationCap className="text-cyan-600" size={13} />
+                                Education & Credentials
+                            </h2>
+                            <div className="space-y-3">
                                 {education.map((edu, index) => (
-                                    <div key={index} className="bg-gray-50 p-3 rounded-lg border-l-2 border-green-500">
-                                        <h4 className="font-bold text-gray-900 text-sm">{edu.degree}</h4>
-                                        <p className="text-xs text-gray-600 font-medium">{edu.school}</p>
-                                        <span className="text-xs text-gray-400">{edu.startDate}-{edu.endDate}</span>
+                                    <div key={index} className="text-xs">
+                                        <p className="font-bold text-slate-900 leading-tight">
+                                            {edu.degree}{edu.fieldOfStudy ? ` — ${edu.fieldOfStudy}` : ""}
+                                        </p>
+                                        <p className="text-xs text-purple-700 font-medium mt-0.5">{edu.school || edu.institution}</p>
+                                        <p className="text-[10px] text-slate-500 mt-0.5">{edu.startDate} – {edu.endDate}</p>
                                     </div>
                                 ))}
                             </div>
@@ -131,4 +206,5 @@ const CreativeTemplate = ({ resumeData }) => {
         </div>
     );
 };
+
 export default CreativeTemplate;

@@ -82,7 +82,8 @@ const ProfessionalTemplate = ({ resumeData }) => {
                         {education.map((edu, index) => (
                             <div key={index} className="text-sm flex flex-col sm:flex-row print:flex-row justify-between items-start sm:items-baseline print:items-baseline mb-2 sm:mb-0 print:mb-0">
                                 <div className="mb-0.5 sm:mb-0 print:mb-0">
-                                    <span className="font-bold text-gray-900">{edu.school}</span>, <span className="italic">{edu.degree}</span>
+                                    <span className="font-bold text-gray-900">{edu.degree}{edu.fieldOfStudy ? ` — ${edu.fieldOfStudy}` : ""}</span>
+                                    {(edu.school || edu.institution) && <span className="italic">, {edu.school || edu.institution}</span>}
                                 </div>
                                 <span className="text-gray-700 text-xs sm:text-sm print:text-sm">{edu.startDate} - {edu.endDate}</span>
                             </div>
